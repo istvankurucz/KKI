@@ -17,7 +17,7 @@ function loadSemesters(parent) {
 
 	// Adding the default semester
 	if (!semesters) {
-		addSemester(sems);
+		addSemester(parent);
 		return;
 	}
 
