@@ -1,7 +1,16 @@
 import { clickedElement } from "./general.js";
 import { readLocalStorage } from "./localstorage.js";
 import { loadMenu } from "./nav.js";
-import { updateAggStats, updateSemesterStats } from "./stats.js";
+import {
+	calcAvg,
+	calcCci,
+	calcCi,
+	calcDoneCredit,
+	calcWAvg,
+	sumProp,
+	updateAggStats,
+	updateSemesterStats,
+} from "./stats.js";
 import { addRow, fillSemesterTable, getSemesterData, orderByProp } from "./table.js";
 
 // Gets the ID of the semester
@@ -92,17 +101,36 @@ function deleteSemester(target) {
 	if (confirm("Biztosan törlöd a félévet?")) sem.remove();
 }
 
+// Downloads the csv file
+function downloadCSV(csv, filename) {
+	const encodedUri = encodeURI(csv);
+	const link = document.createElement("a");
+	link.setAttribute("href", encodedUri);
+	link.setAttribute("download", filename);
+	document.body.appendChild(link); // Required for FF
+
+	link.click();
+}
+
 // Makes a csv file from the data of the semester
 function exportSemesterData(target) {
 	const id = getSemesterId(target);
 	const data = getSemesterData(id);
 
-	const header = "Tárgynév;Kredit;Osztályzat\n";
-	let body = "";
-	data.forEach((subject) => (body += `${subject.subject};${subject.credit};${subject.grade}\n`));
+	let csv = "data:text/csv;charset=utf-8,";
+	csv += "Tárgynév;Kredit;Osztályzat\r\n"; // adding the header
+	data.forEach((subject) => (csv += `${subject.subject};${subject.credit};${subject.grade}\r\n`)); // adding the table
+	csv += "\r\n\r\n"; // 2 empty rows
+	// Adding the stats
+	csv += `Felvett kreditek;${sumProp(data, "credit").toString()}\r\n`;
+	csv += `Teljesített kreditek;${calcDoneCredit(data).toString()}\r\n`;
+	csv += `Átlag;${calcAvg(data).toString()}\r\n`;
+	csv += `Súlyozott átlag;${calcWAvg(data).toString()}\r\n`;
+	csv += `Kredintindex;${calcCi(data).toString()}\r\n`;
+	csv += `Korrigált kredintindex;${calcCci(data).toString()}\r\n`;
 
-	const csv = header + body;
-	console.log(csv);
+	const filename = `felev${id.slice(3)}`;
+	downloadCSV(csv, filename);
 }
 
 export { getSemesterId, loadSemesters, addSemester, deleteSemester };

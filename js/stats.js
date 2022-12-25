@@ -161,4 +161,4 @@ function updateAggStats() {
 	cci.innerText = calcAggCci(data).toFixed(2).toString();
 }
 
-export { updateSemesterStats, updateAggStats };
+export { sumProp, calcDoneCredit, calcAvg, calcWAvg, calcCi, calcCci, updateSemesterStats, updateAggStats };
