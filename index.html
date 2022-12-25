@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Tanulmányi átlagok</title>
+	</head>
+	<body>
+		<nav class="nav">
+			<button class="button nav__button">
+				<i class="fa-solid fa-bars show"></i>
+				<i class="fa-solid fa-x"></i>
+			</button>
+
+			<ul class="menu">
+				<template id="menuitem">
+					<li class="menuitem"><a href="#sem">0. félév</a></li>
+				</template>
+			</ul>
+		</nav>
+
+		<div class="container">
+			<div class="theme">
+				<span class="theme__text">Téma</span>
+				<button class="theme__switch"></button>
+			</div>
+
+			<h1 class="title">Tanulmányi átlagok</h1>
+
+			<!-- Semester container -->
+			<main class="sems">
+				<h2 class="subtitle">
+					<span class="subtitle__text">Féléves eredmények</span>
+				</h2>
+
+				<!-- Semester template -->
+				<template id="sem">
+					<section class="sem">
+						<header class="sem__header">
+							<h3 class="sem__title">
+								<span class="sem__title__num">1</span>
+								<span class="sem__title__text">. félév</span>
+							</h3>
+
+							<button class="sem__remove">
+								<i class="fa-solid fa-x"></i>
+							</button>
+						</header>
+
+						<div class="sem__layout">
+							<!-- Table -->
+							<div class="table">
+								<header class="table__row table__row--header">
+									<div class="table__col" order="none">
+										<span class="table__col__text">Tárgynév</span>
+										<span class="table__col__order"><i class="fa-solid fa-caret-down"></i></span>
+									</div>
+									<div class="table__col" order="none">
+										<span class="table__col__text">Kredit</span>
+										<span class="table__col__order"><i class="fa-solid fa-caret-down"></i></span>
+									</div>
+									<div class="table__col" order="none">
+										<span class="table__col__text">Osztályzat</span>
+										<span class="table__col__order"><i class="fa-solid fa-caret-down"></i></span>
+									</div>
+									<div class="table__col"></div>
+								</header>
+
+								<div class="table__body"></div>
+
+								<button class="table__newRow">
+									<i class="fa-solid fa-circle-plus"></i>
+									<span class="table__newRow__text">Új tárgy hozzáadása</span>
+								</button>
+							</div>
+
+							<div class="sem__right">
+								<!-- Stat -->
+								<div class="stat">
+									<div class="stat__row stat__row--allCredit">
+										<span class="stat__name">Felvett kreditek:</span>
+										<span class="stat__value">0.00</span>
+									</div>
+
+									<div class="stat__row stat__row--doneCredit">
+										<span class="stat__name">Teljesített kreditek:</span>
+										<span class="stat__value">0.00</span>
+									</div>
+
+									<div class="divider"></div>
+
+									<div class="stat__row stat__row--avg">
+										<span class="stat__name">Átlag:</span>
+										<span class="stat__value">0.00</span>
+									</div>
+
+									<div class="stat__row stat__row--wavg">
+										<span class="stat__name">Súlyozott átlag:</span>
+										<span class="stat__value">0.00</span>
+									</div>
+
+									<div class="stat__row stat__row--ci">
+										<span class="stat__name">Kredintindex:</span>
+										<span class="stat__value">0.00</span>
+									</div>
+
+									<div class="stat__row stat__row--cci">
+										<span class="stat__name">Korrigált kreditindex:</span>
+										<span class="stat__value">0.00</span>
+									</div>
+								</div>
+
+								<button class="button button--outlined sem__export">
+									<i class="fa-solid fa-table"></i>
+									<span class="sem__export__text">Export</span>
+								</button>
+							</div>
+						</div>
+					</section>
+				</template>
+
+				<!-- Row template -->
+				<template id="table__row">
+					<div class="table__row">
+						<div class="table__col table__col--subject">
+							<input type="text" placeholder="Tárgy neve" />
+						</div>
+						<div class="table__col table__col--credit">
+							<input type="number" placeholder="Kr" value="0" min="0" required />
+						</div>
+						<div class="table__col table__col--grade">
+							<input type="number" placeholder="Jegy" value="0" min="1" max="5" required />
+						</div>
+						<div class="table__col table__col--delete">
+							<button><i class="fa-solid fa-trash-can"></i></button>
+						</div>
+					</div>
+				</template>
+			</main>
+
+			<button class="button button--newSem">
+				<i class="fa-solid fa-circle-plus"></i>
+				<span class="newSem__text">Félév hozzáadása</span>
+			</button>
+
+			<!-- Aggregated Stats -->
+			<section class="aggStat" id="aggStat">
+				<h2 class="subtitle">
+					<span class="subtitle__text">Összesített eredmények</span>
+				</h2>
+
+				<div class="stat">
+					<div class="stat__row stat__row--allCredit">
+						<span class="stat__name">Felvett kreditek:</span>
+						<span class="stat__value">0.00</span>
+					</div>
+
+					<div class="stat__row stat__row--doneCredit">
+						<span class="stat__name">Teljesített kreditek:</span>
+						<span class="stat__value">0.00</span>
+					</div>
+
+					<div class="divider"></div>
+
+					<div class="stat__row stat__row--avg">
+						<span class="stat__name">Átlag:</span>
+						<span class="stat__value">0.00</span>
+					</div>
+
+					<div class="stat__row stat__row--wavg">
+						<span class="stat__name">Súlyozott átlag:</span>
+						<span class="stat__value">0.00</span>
+					</div>
+
+					<div class="stat__row stat__row--ci">
+						<span class="stat__name">Kredintindex:</span>
+						<span class="stat__value">0.00</span>
+					</div>
+
+					<div class="stat__row stat__row--cci">
+						<span class="stat__name">Korrigált kreditindex:</span>
+						<span class="stat__value">0.00</span>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<!-- Go Top Button -->
+		<button class="button goTop">
+			<i class="fa-solid fa-arrow-up"></i>
+		</button>
+
+		<script src="script.js" type="module"></script>
+	</body>
+</html>
