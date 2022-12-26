@@ -1,5 +1,5 @@
 import { getTheme, updateLocalStorage } from "./js/localstorage.js";
-import { handleMenuClick, loadMenu } from "./js/nav.js";
+import { closeMenu, handleMenuClick, handleNavScroll, loadMenu } from "./js/nav.js";
 import { addSemester, loadSemesters } from "./js/sem.js";
 
 // Loading the data from the local storage
@@ -14,7 +14,7 @@ loadMenu();
 const navButton = document.querySelector(".nav__button");
 navButton.addEventListener("click", handleMenuClick);
 
-navButton.addEventListener("blur", () => setTimeout(handleMenuClick, 100));
+navButton.addEventListener("blur", () => setTimeout(closeMenu, 100));
 
 // Adding a semester when the user clicks the add semester button
 const addSemesterButton = document.querySelector(".button--newSem");
@@ -45,6 +45,8 @@ const goTopButton = document.querySelector(".goTop");
 window.addEventListener("scroll", () => {
 	if (window.scrollY > 300) goTopButton.classList.add("show");
 	else goTopButton.classList.remove("show");
+
+	handleNavScroll(open);
 });
 
 // When the user clicks the go top button go to the top of the page
@@ -52,4 +54,4 @@ goTopButton.addEventListener("click", () => window.scrollTo(0, 0));
 // #endregion
 
 // When the user leaves the site update the local storage
-window.addEventListener("visibilitychange", () => updateLocalStorage());
+window.addEventListener("visibilitychange", updateLocalStorage);

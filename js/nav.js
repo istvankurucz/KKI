@@ -10,6 +10,58 @@ function handleMenuClick() {
 	x.classList.toggle("show");
 }
 
+// Closes the menu
+function closeMenu() {
+	const navButton = document.querySelector(".nav__button");
+	const bars = navButton.querySelector(".fa-bars");
+	const x = navButton.querySelector(".fa-x");
+	const menu = document.querySelector(".menu");
+
+	menu.classList.remove("show");
+	bars.classList.add("show");
+	x.classList.remove("show");
+}
+
+// Shows the menu
+function showNav() {
+	const nav = document.querySelector(".nav");
+	nav.classList.add("show");
+}
+
+// Hides the menu
+function hideNav() {
+	const nav = document.querySelector(".nav");
+	nav.classList.remove("show");
+}
+
+// Returns if the menu is opened or not
+function isMenuOpen() {
+	const menu = document.querySelector(".menu");
+	return menu.classList.contains("show");
+}
+
+// Shows/hides the nav based on the scroll direction
+let first = true,
+	start,
+	last;
+function handleNavScroll() {
+	if (isMenuOpen()) {
+		showNav();
+		return;
+	}
+
+	if (first) {
+		start = window.scrollY;
+		first = false;
+	}
+	if (window.scrollY - 200 > start) hideNav();
+	if (window.scrollY < last) {
+		showNav();
+		first = true;
+	}
+	last = window.scrollY;
+}
+
 // Gets the menuitems
 function getMenuitems() {
 	const semesters = document.querySelectorAll(".sem");
@@ -53,4 +105,4 @@ function loadMenu() {
 	data.forEach((menuitem) => addMenuitem(menuitem, menu));
 }
 
-export { handleMenuClick, getMenuitems, loadMenu };
+export { handleMenuClick, closeMenu, handleNavScroll, getMenuitems, loadMenu };

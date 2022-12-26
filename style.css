@@ -80,9 +80,13 @@ body.dark {
 /* #region Nav */
 .nav {
 	position: fixed;
-	top: 30px;
+	top: -55px;
 	left: 30px;
 	z-index: 999;
+	transition: top 0.3s linear;
+}
+.nav.show {
+	top: 30px;
 }
 
 .nav__button {
@@ -557,6 +561,13 @@ body.dark .theme__switch::before {
 }
 
 @media screen and (max-width: 650px) {
+	.nav {
+		left: 1rem;
+	}
+	.nav.show {
+		top: 1rem;
+	}
+
 	.table__row--header .table__col {
 		flex-direction: column;
 		gap: 0rem;
