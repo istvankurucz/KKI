@@ -1,3 +1,4 @@
+import { showCharts } from "./chart.js";
 import { clickedElement } from "./general.js";
 import { readLocalStorage } from "./localstorage.js";
 import { loadMenu } from "./nav.js";
@@ -18,6 +19,11 @@ function getSemesterId(target) {
 	const sem = clickedElement(target, "sem");
 
 	return sem.getAttribute("id");
+}
+
+// Returns the count of semesters
+function getSemesterCount() {
+	return document.querySelectorAll(".sem").length;
 }
 
 // When the site loads load the semesters from local storage
@@ -68,6 +74,7 @@ function addSemester(parent, rows = 5) {
 	closeButton.addEventListener("click", (e) => {
 		deleteSemester(e.target);
 		loadMenu();
+		showCharts();
 	});
 
 	// Set the order feature
@@ -133,4 +140,4 @@ function exportSemesterData(target) {
 	downloadCSV(csv, filename);
 }
 
-export { getSemesterId, loadSemesters, addSemester, deleteSemester };
+export { getSemesterId, getSemesterCount, loadSemesters, addSemester, deleteSemester };

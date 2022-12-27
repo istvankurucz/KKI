@@ -34,6 +34,8 @@
 
 /* #region Button */
 .button {
+	--light-color: #f0f0f5;
+
 	font-size: 1rem;
 	font-weight: 500;
 	color: var(--light-color);
@@ -488,6 +490,48 @@ body.dark .theme__switch::before {
 .aggStat .stat {
 	width: 100%;
 	max-width: 500px;
+	margin-bottom: 3rem;
+}
+/* #endregion */
+
+/* #region Charts */
+.charts {
+	height: fit-content;
+	transition: height 0.3s linear;
+}
+.charts.hide {
+	height: 0;
+	overflow: hidden;
+}
+
+.charts__refresh {
+	display: block;
+	justify-content: right;
+	margin: 0 1rem 0.5rem auto;
+}
+
+.charts__section {
+	margin-bottom: 2rem;
+}
+.charts__section:last-child {
+	margin-bottom: 0;
+}
+
+.charts__section__title {
+	margin: 0 0 1rem 1rem;
+}
+
+.charts__row {
+	display: flex;
+	gap: 1rem;
+}
+
+.chart {
+	min-width: 325px;
+	width: 50%;
+	height: 300px;
+	background: var(--dark-color);
+	border-radius: var(--br-small);
 }
 /* #endregion */
 
@@ -572,6 +616,14 @@ body.dark .theme__switch::before {
 		flex-direction: column;
 		gap: 0rem;
 		font-size: 0.9rem;
+	}
+
+	.charts__row {
+		flex-wrap: wrap;
+	}
+
+	.chart {
+		width: 100%;
 	}
 
 	.goTop {

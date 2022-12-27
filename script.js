@@ -1,6 +1,7 @@
+import { addChart, calcFunction, chartData, getPoints, showCharts } from "./js/chart.js";
 import { getTheme, updateLocalStorage } from "./js/localstorage.js";
 import { closeMenu, handleMenuClick, handleNavScroll, loadMenu } from "./js/nav.js";
-import { addSemester, loadSemesters } from "./js/sem.js";
+import { addSemester, getSemesterCount, loadSemesters } from "./js/sem.js";
 
 // Loading the data from the local storage
 const sems = document.querySelector(".sems");
@@ -15,14 +16,15 @@ const navButton = document.querySelector(".nav__button");
 navButton.addEventListener("click", handleMenuClick);
 
 navButton.addEventListener("blur", () => setTimeout(closeMenu, 100));
+// #endregion
 
 // Adding a semester when the user clicks the add semester button
 const addSemesterButton = document.querySelector(".button--newSem");
 addSemesterButton.addEventListener("click", () => {
 	addSemester(sems);
 	loadMenu();
+	showCharts();
 });
-// #endregion
 
 // #region Theme
 function setTheme() {
@@ -55,3 +57,11 @@ goTopButton.addEventListener("click", () => window.scrollTo(0, 0));
 
 // When the user leaves the site update the local storage
 window.addEventListener("visibilitychange", updateLocalStorage);
+
+// #region Charts
+const refreshChartsButton = document.querySelector(".charts__refresh");
+refreshChartsButton.addEventListener("click", showCharts);
+// Shows the charts
+const semCount = getSemesterCount();
+showCharts(semCount);
+// #endregion

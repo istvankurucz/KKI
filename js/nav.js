@@ -45,7 +45,7 @@ let first = true,
 	start,
 	last;
 function handleNavScroll() {
-	if (isMenuOpen()) {
+	if (isMenuOpen() || window.innerWidth >= 1200) {
 		showNav();
 		return;
 	}

@@ -1,7 +1,7 @@
 import { checkSemesterData, getAllSemesterData, getValues } from "./table.js";
 
 // Calculates the sum of the given prop
-function sumProp(semesterData, prop) {
+function sumProp(semesterData, prop = "credit") {
 	const propData = getValues(semesterData, prop);
 
 	return propData.reduce((total, current) => total + current);
@@ -131,10 +131,10 @@ function updateSemesterStats(semester, data) {
 
 	allCredit.innerText = sumProp(data, "credit").toString();
 	doneCredit.innerText = calcDoneCredit(data).toString();
-	avg.innerText = calcAvg(data).toFixed(2).toString();
-	wavg.innerText = calcWAvg(data).toFixed(2).toString();
-	ci.innerText = calcCi(data).toFixed(2).toString();
-	cci.innerText = calcCci(data).toFixed(2).toString();
+	avg.innerText = calcAvg(data).toFixed(2);
+	wavg.innerText = calcWAvg(data).toFixed(2);
+	ci.innerText = calcCi(data).toFixed(2);
+	cci.innerText = calcCci(data).toFixed(2);
 }
 
 // Updates the Aggregated Stats block
@@ -155,10 +155,25 @@ function updateAggStats() {
 
 	allCredit.innerText = sumAggCredit(data).toString();
 	doneCredit.innerText = calcAggDoneCredit(data).toString();
-	avg.innerText = calcAggAvg(data).toFixed(2).toString();
-	wavg.innerText = calcAggWAvg(data).toFixed(2).toString();
-	ci.innerText = calcAggCi(data).toFixed(2).toString();
-	cci.innerText = calcAggCci(data).toFixed(2).toString();
+	avg.innerText = calcAggAvg(data).toFixed(2);
+	wavg.innerText = calcAggWAvg(data).toFixed(2);
+	ci.innerText = calcAggCi(data).toFixed(2);
+	cci.innerText = calcAggCci(data).toFixed(2);
 }
 
-export { sumProp, calcDoneCredit, calcAvg, calcWAvg, calcCi, calcCci, updateSemesterStats, updateAggStats };
+export {
+	sumProp,
+	sumAggCredit,
+	calcDoneCredit,
+	calcAggDoneCredit,
+	calcAvg,
+	calcAggAvg,
+	calcWAvg,
+	calcAggWAvg,
+	calcCi,
+	calcAggCi,
+	calcCci,
+	calcAggCci,
+	updateSemesterStats,
+	updateAggStats,
+};

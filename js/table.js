@@ -1,3 +1,4 @@
+import { showCharts } from "./chart.js";
 import { clickedElement, compare } from "./general.js";
 import { getSemesterId } from "./sem.js";
 import { updateAggStats, updateSemesterStats } from "./stats.js";
@@ -40,6 +41,8 @@ function changedData(target) {
 
 	updateSemesterStats(id, data);
 	updateAggStats();
+
+	//showCharts();
 }
 
 // Gets the data from the DOM and checks the data
@@ -67,14 +70,16 @@ function getSemesterData(semester) {
 }
 
 // Gets the data of all semesters
-function getAllSemesterData() {
+function getAllSemesterData(semCount = 0) {
 	const semesters = document.querySelectorAll(".sem");
 
 	const data = [];
-	semesters.forEach((sem) => {
-		const id = sem.getAttribute("id");
-		const semesterData = getSemesterData(id);
-		data.push(semesterData);
+	semesters.forEach((sem, i) => {
+		if (!semCount || i < semCount) {
+			const id = sem.getAttribute("id");
+			const semesterData = getSemesterData(id);
+			data.push(semesterData);
+		}
 	});
 
 	return data;

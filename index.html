@@ -185,6 +185,67 @@
 						<span class="stat__value">0.00</span>
 					</div>
 				</div>
+
+				<div class="charts">
+					<button class="button charts__refresh">
+						<i class="fa-solid fa-arrows-rotate"></i>
+						<span class="charts__refresh__text">Grafikonok frissítése</span>
+					</button>
+
+					<div class="charts__section charts__section--allCredit">
+						<h3 class="charts__section__title">Felvett kreditek</h3>
+
+						<div class="charts__row">
+							<div class="chart" id="chartAllCredit"></div>
+							<div class="chart" id="chartAggAllCredit"></div>
+						</div>
+					</div>
+
+					<div class="charts__section charts__section--doneCredit">
+						<h3 class="charts__section__title">Teljesített kreditek</h3>
+
+						<div class="charts__row">
+							<div class="chart" id="chartDoneCredit"></div>
+							<div class="chart" id="chartAggDoneCredit"></div>
+						</div>
+					</div>
+
+					<div class="charts__section charts__section--avg">
+						<h3 class="charts__section__title">Átlag</h3>
+
+						<div class="charts__row">
+							<div class="chart" id="chartAvg"></div>
+							<div class="chart" id="chartAggAvg"></div>
+						</div>
+					</div>
+
+					<div class="charts__section charts__section--wAvg">
+						<h3 class="charts__section__title">Súlyozott átlag</h3>
+
+						<div class="charts__row">
+							<div class="chart" id="chartWAvg"></div>
+							<div class="chart" id="chartAggWAvg"></div>
+						</div>
+					</div>
+
+					<div class="charts__section charts__section--ci">
+						<h3 class="charts__section__title">Kreditindex</h3>
+
+						<div class="charts__row">
+							<div class="chart" id="chartCi"></div>
+							<div class="chart" id="chartAggCi"></div>
+						</div>
+					</div>
+
+					<div class="charts__section charts__section--cci">
+						<h3 class="charts__section__title">Korrigált kreditindex</h3>
+
+						<div class="charts__row">
+							<div class="chart" id="chartCci"></div>
+							<div class="chart" id="chartAggCci"></div>
+						</div>
+					</div>
+				</div>
 			</section>
 		</div>
 
@@ -193,6 +254,7 @@
 			<i class="fa-solid fa-arrow-up"></i>
 		</button>
 
+		<script src="https://code.jscharting.com/latest/jscharting.js"></script>
 		<script src="script.js" type="module"></script>
 	</body>
 </html>
