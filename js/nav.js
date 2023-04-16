@@ -69,7 +69,7 @@ function getMenuitems() {
 	const items = [];
 	semesters.forEach((sem) => {
 		const id = sem.getAttribute("id");
-		const num = sem.querySelector(".sem__title__num").innerText;
+		const num = sem.querySelector(".sem__title__num").value;
 
 		items.push({ id, text: `${num}. félév` });
 	});

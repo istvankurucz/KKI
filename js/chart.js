@@ -13,7 +13,9 @@ import {
 	sumAggCredit,
 	sumProp,
 } from "./stats.js";
-import { getAllSemesterData, getSemesterData } from "./table.js";
+import { getAllSemesterData, getSemesterData, getSubjectsData } from "./table.js";
+
+const allCharts = [];
 
 // Titles and names for the chart
 const chartData = [
@@ -36,12 +38,60 @@ const chartData = [
 	{ title: "Korrigált kreditindex a félévek során (görgetett)", name: "Korrigált kreditindex" },
 ];
 
-// Style to the texts on the chart
-const fontStyle = {
-	fontFamily: "Montserrat",
-	fontSize: 16,
-	fontWeight: 500,
-};
+// Sets the styles of the chart
+function setChartOptions(chartTitle, yAxisTitle) {
+	const darkColor = "#0d0d26";
+
+	return {
+		plugins: {
+			title: {
+				text: chartTitle,
+				display: true,
+				font: {
+					size: "16px",
+					family: "Montserrat",
+				},
+				color: darkColor,
+				padding: {
+					top: 5,
+					bottom: 20,
+				},
+			},
+			legend: {
+				display: false,
+			},
+			tooltip: {
+				enabled: true,
+			},
+		},
+		layout: {
+			padding: 5,
+		},
+		elements: {
+			line: {
+				borderWidth: 3,
+			},
+			point: {
+				radius: 5,
+				hoverRadius: 7,
+			},
+		},
+		scales: {
+			y: {
+				min: 0,
+				title: {
+					display: true,
+					text: yAxisTitle,
+					color: darkColor,
+					font: {
+						size: 12,
+						weight: 500,
+					},
+				},
+			},
+		},
+	};
+}
 
 // Based on the chart id returns the proper function to execute the calculation
 function calcFunction(id) {
@@ -84,75 +134,41 @@ function calcFunction(id) {
 	}
 }
 
-// Sets the styles of the chart
-function setChartStyle(chartData) {
-	return {
-		title: {
-			label: {
-				text: chartData.title,
-				style: fontStyle,
-			},
-			margin: {
-				top: 5,
-				bottom: 10,
-			},
-			position: "center",
-		},
-		xAxis: {
-			label: {
-				text: "félév",
-				color: "#0d0d26",
-				margin: {
-					top: 10,
-				},
-			},
-			scale: {
-				interval: 1,
-			},
-		},
-		yAxis: {
-			label: {
-				text: chartData.name,
-				color: "#0d0d26",
-				margin: {
-					top: 10,
-					bottom: 10,
-				},
-			},
-		},
-		legend: {
-			visible: false,
-		},
-	};
-}
-
 // Gets the points
 function getPoints(semCount, calcFunction, agg = false) {
 	const points = [];
 	for (let i = 0; i < semCount; i++) {
-		const data = agg ? getAllSemesterData(i + 1) : getSemesterData(`sem${i + 1}`);
+		const sem = document.querySelectorAll(".sem")[i];
+		const semId = sem.getAttribute("id");
+
+		const data = agg ? getSubjectsData(getAllSemesterData(i + 1)) : getSemesterData(semId);
+		// const data = agg ? getSubjectsData(getAllSemesterData(i + 1)) : getSemesterData(i);
 		const value = Math.round(calcFunction(data) * 100) / 100;
-		points.push({ x: i + 1, y: value });
+		points.push({ x: parseInt(semId.slice(3)), y: value });
 	}
 
 	return points;
 }
 
 // Adds chart
-function addChart(chartDiv, chartData, points) {
-	const chart = new JSC.Chart(chartDiv, {
-		...setChartStyle(chartData),
-
-		series: [
-			{
-				name: chartData.name,
-				type: "line",
-				color: "#ff6600", //"#0d0d26",
-				points: points,
-			},
-		],
-		debug: true,
+function addChart(id, data, options) {
+	const chart = new Chart(document.getElementById(id), {
+		type: "line",
+		data: {
+			labels: data.map((row) => `${row.x}. félév`),
+			datasets: [
+				{
+					label: "KKI",
+					data: data.map((row) => row.y),
+					backgroundColor: "#ff6600",
+					borderColor: "#ff6600",
+				},
+			],
+		},
+		options,
 	});
+
+	return chart;
 }
 
 // Shows the charts
@@ -164,12 +180,20 @@ function showCharts() {
 		return;
 	} else chartsBlock.classList.remove("hide");
 
-	const charts = document.querySelectorAll(".chart");
+	const charts = document.querySelectorAll(".chart canvas");
 	charts.forEach((chart, i) => {
 		const id = chart.getAttribute("id");
 		const points = getPoints(semCount, calcFunction(id), i % 2);
-		addChart(id, chartData[i], points);
+		const options = setChartOptions(chartData[i].title, chartData[i].name);
+
+		const created = addChart(id, points, options);
+		allCharts.push({ id, chart: created });
 	});
 }
 
-export { chartData, calcFunction, getPoints, addChart, showCharts };
+// Removes the charts
+function removeCharts() {
+	allCharts.forEach((chart) => chart.chart.destroy());
+}
+
+export { chartData, calcFunction, getPoints, addChart, showCharts, removeCharts };

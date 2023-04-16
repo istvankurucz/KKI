@@ -37,9 +37,12 @@ function loadSemesters(parent) {
 	}
 
 	semesters.forEach((sem, i) => {
-		addSemester(parent, sem.length);
-		fillSemesterTable(`sem${i + 1}`, sem);
-		updateSemesterStats(`sem${i + 1}`, sem);
+		// addSemester(parent, sem.subjects.length);
+		addSemester(parent, sem.id, sem.subjects.length);
+		// fillSemesterTable(`sem${i + 1}`, sem.subjects);
+		fillSemesterTable(`sem${sem.id}`, sem.subjects);
+		// updateSemesterStats(`sem${i + 1}`, sem.subjects);
+		updateSemesterStats(`sem${sem.id}`, sem.subjects);
 		updateAggStats();
 	});
 }
@@ -56,18 +59,32 @@ function getLatestSemesterId() {
 }
 
 // Adds a new a semester
-function addSemester(parent, rows = 5) {
+function addSemester(parent, semId, rows = 5) {
 	const semTemplate = document.querySelector("#sem");
 	const clon = semTemplate.content.cloneNode(true);
 
 	// Set the id of the semester
-	const id = getLatestSemesterId() + 1;
+	const id = semId ? semId : getLatestSemesterId() + 1;
 	const sem = clon.querySelector(".sem");
+	// sem.setAttribute("id", `sem${id}`);
 	sem.setAttribute("id", `sem${id}`);
 
 	// Set the title of the semester
+	const title = clon.querySelector(".sem__title");
+	title.addEventListener("dblclick", (e) => changeSemesterNumber(e));
+
 	const titleNum = clon.querySelector(".sem__title__num");
-	titleNum.innerText = id.toString();
+	// titleNum.value = id.toString();
+	titleNum.value = id;
+	titleNum.style.setProperty("--num--length", titleNum.value.length);
+
+	titleNum.addEventListener("change", (e) => setSemesterNumberWidth(e));
+	titleNum.addEventListener("blur", (e) => {
+		const sem = clickedElement(e.target, "sem");
+		sem.setAttribute("id", `sem${e.target.value}`);
+
+		e.target.setAttribute("disabled", true);
+	});
 
 	// Delete semester
 	const closeButton = clon.querySelector(".sem__remove");
@@ -138,6 +155,20 @@ function exportSemesterData(target) {
 
 	const filename = `felev${id.slice(3)}`;
 	downloadCSV(csv, filename);
+}
+
+// When the user changes the number of the semester
+function changeSemesterNumber(e) {
+	const title = clickedElement(e.target, "sem__title");
+	const titleNum = title.querySelector(".sem__title__num");
+	titleNum.removeAttribute("disabled");
+	titleNum.focus();
+}
+
+// Sets the width of the input based on the digits
+function setSemesterNumberWidth(e) {
+	const input = e.target;
+	if (input.value.length) input.style.setProperty("--num--length", input.value.length);
 }
 
 export { getSemesterId, getSemesterCount, loadSemesters, addSemester, deleteSemester };

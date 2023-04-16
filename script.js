@@ -1,4 +1,5 @@
-import { addChart, calcFunction, chartData, getPoints, showCharts } from "./js/chart.js";
+// import Chart from "chart.js";
+import { addChart, calcFunction, chartData, getPoints, removeCharts, showCharts } from "./js/chart.js";
 import { getTheme, updateLocalStorage } from "./js/localstorage.js";
 import { closeMenu, handleMenuClick, handleNavScroll, loadMenu } from "./js/nav.js";
 import { addSemester, getSemesterCount, loadSemesters } from "./js/sem.js";
@@ -60,8 +61,13 @@ window.addEventListener("visibilitychange", updateLocalStorage);
 
 // #region Charts
 const refreshChartsButton = document.querySelector(".charts__refresh");
-refreshChartsButton.addEventListener("click", showCharts);
+refreshChartsButton.addEventListener("click", () => {
+	removeCharts();
+	showCharts();
+});
 // Shows the charts
-const semCount = getSemesterCount();
-showCharts(semCount);
+Chart.defaults.borderColor = "#0d0d2666";
+Chart.defaults.color = "#0d0d26";
+
+showCharts();
 // #endregion

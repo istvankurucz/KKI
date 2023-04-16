@@ -6,6 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 		<link rel="stylesheet" href="style.css" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.js"></script>
+		<script src="script.js" type="module" defer></script>
 		<title>Tanulmányi átlagok</title>
 	</head>
 	<body>
@@ -30,6 +32,8 @@
 
 			<h1 class="title">Tanulmányi átlagok</h1>
 
+			<canvas id="id"></canvas>
+
 			<!-- Semester container -->
 			<main class="sems">
 				<h2 class="subtitle">
@@ -41,8 +45,9 @@
 					<section class="sem">
 						<header class="sem__header">
 							<h3 class="sem__title">
-								<span class="sem__title__num">1</span>
+								<input type="text" value="0" disabled class="sem__title__num" />
 								<span class="sem__title__text">. félév</span>
+								<div class="tooltip">A félév számának megváltoztatásához kattints duplán a félév számára.</div>
 							</h3>
 
 							<button class="sem__remove">
@@ -196,8 +201,12 @@
 						<h3 class="charts__section__title">Felvett kreditek</h3>
 
 						<div class="charts__row">
-							<div class="chart" id="chartAllCredit"></div>
-							<div class="chart" id="chartAggAllCredit"></div>
+							<div class="chart">
+								<canvas id="chartAllCredit"></canvas>
+							</div>
+							<div class="chart">
+								<canvas id="chartAggAllCredit"></canvas>
+							</div>
 						</div>
 					</div>
 
@@ -205,8 +214,12 @@
 						<h3 class="charts__section__title">Teljesített kreditek</h3>
 
 						<div class="charts__row">
-							<div class="chart" id="chartDoneCredit"></div>
-							<div class="chart" id="chartAggDoneCredit"></div>
+							<div class="chart">
+								<canvas id="chartDoneCredit"></canvas>
+							</div>
+							<div class="chart">
+								<canvas id="chartAggDoneCredit"></canvas>
+							</div>
 						</div>
 					</div>
 
@@ -214,8 +227,12 @@
 						<h3 class="charts__section__title">Átlag</h3>
 
 						<div class="charts__row">
-							<div class="chart" id="chartAvg"></div>
-							<div class="chart" id="chartAggAvg"></div>
+							<div class="chart">
+								<canvas id="chartAvg"></canvas>
+							</div>
+							<div class="chart">
+								<canvas id="chartAggAvg"></canvas>
+							</div>
 						</div>
 					</div>
 
@@ -223,8 +240,12 @@
 						<h3 class="charts__section__title">Súlyozott átlag</h3>
 
 						<div class="charts__row">
-							<div class="chart" id="chartWAvg"></div>
-							<div class="chart" id="chartAggWAvg"></div>
+							<div class="chart">
+								<canvas id="chartWAvg"></canvas>
+							</div>
+							<div class="chart">
+								<canvas id="chartAggWAvg"></canvas>
+							</div>
 						</div>
 					</div>
 
@@ -232,8 +253,12 @@
 						<h3 class="charts__section__title">Kreditindex</h3>
 
 						<div class="charts__row">
-							<div class="chart" id="chartCi"></div>
-							<div class="chart" id="chartAggCi"></div>
+							<div class="chart">
+								<canvas id="chartCi"></canvas>
+							</div>
+							<div class="chart">
+								<canvas id="chartAggCi"></canvas>
+							</div>
 						</div>
 					</div>
 
@@ -241,8 +266,12 @@
 						<h3 class="charts__section__title">Korrigált kreditindex</h3>
 
 						<div class="charts__row">
-							<div class="chart" id="chartCci"></div>
-							<div class="chart" id="chartAggCci"></div>
+							<div class="chart">
+								<canvas id="chartCci"></canvas>
+							</div>
+							<div class="chart">
+								<canvas id="chartAggCci"></canvas>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -253,8 +282,5 @@
 		<button class="button goTop">
 			<i class="fa-solid fa-arrow-up"></i>
 		</button>
-
-		<script src="https://code.jscharting.com/latest/jscharting.js"></script>
-		<script src="script.js" type="module"></script>
 	</body>
 </html>

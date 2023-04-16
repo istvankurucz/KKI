@@ -1,4 +1,4 @@
-import { checkSemesterData, getAllSemesterData, getValues } from "./table.js";
+import { checkSemesterData, getAllSemesterData, getSubjectsData, getValues } from "./table.js";
 
 // Calculates the sum of the given prop
 function sumProp(semesterData, prop = "credit") {
@@ -139,7 +139,8 @@ function updateSemesterStats(semester, data) {
 
 // Updates the Aggregated Stats block
 function updateAggStats() {
-	const data = getAllSemesterData();
+	const data = getSubjectsData(getAllSemesterData());
+	// console.log(data);
 
 	for (let i = 0; i < data.length; i++) {
 		if (!checkSemesterData(data[i])) return;
