@@ -190,12 +190,17 @@ body.dark {
 /* #endregion */
 
 .container {
+	--shadow-color: #0d0d2633;
+
 	width: 100%;
-	max-width: 1000px;
-	border-left: 1px solid var(--dark-color);
-	border-right: 1px solid var(--dark-color);
+	max-width: 1200px;
+	box-shadow: 0 0 1rem var(--shadow-color);
+	/* box-shadow: 0 0 1rem #f0f0f555; */
 	padding: 3rem 2rem 5rem;
 	margin: 0 auto;
+}
+.dark .container {
+	--shadow-color: #f0f0f533;
 }
 
 /* #region Theme */
@@ -214,6 +219,7 @@ body.dark {
 	width: 40px;
 	height: 20px;
 	background: var(--dark-color);
+	border: 2px solid var(--dark-color);
 	border-radius: var(--br-pill);
 	position: relative;
 	transition: var(--bg-transition);
@@ -226,9 +232,8 @@ body.dark {
 	background: var(--light-color);
 	border-radius: var(--br-pill);
 	position: absolute;
-	top: 50%;
+	top: calc(50% - 8px);
 	left: 0;
-	translate: 0 -50%;
 	transition: left 0.3s linear, var(--bg-transition);
 }
 .theme__switch:hover::before {
@@ -369,7 +374,7 @@ body.dark .theme__switch::before {
 /* #region Table */
 .table {
 	min-width: 520px;
-	width: 50%;
+	width: 60%;
 	height: fit-content;
 }
 .table:hover .table__newRow {
