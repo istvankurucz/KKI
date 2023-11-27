@@ -194,8 +194,7 @@ body.dark {
 
 	width: 100%;
 	max-width: 1200px;
-	box-shadow: 0 0 1rem var(--shadow-color);
-	/* box-shadow: 0 0 1rem #f0f0f555; */
+	/* box-shadow: 0 0 1rem var(--shadow-color); */
 	padding: 3rem 2rem 5rem;
 	margin: 0 auto;
 }
@@ -227,13 +226,13 @@ body.dark {
 }
 .theme__switch::before {
 	content: "";
-	width: 16px;
-	height: 16px;
+	width: 12px;
+	height: 12px;
 	background: var(--light-color);
 	border-radius: var(--br-pill);
 	position: absolute;
-	top: calc(50% - 8px);
-	left: 0;
+	top: calc(50% - 6px);
+	left: 3px;
 	transition: left 0.3s linear, var(--bg-transition);
 }
 .theme__switch:hover::before {
@@ -241,7 +240,7 @@ body.dark {
 }
 
 body.dark .theme__switch::before {
-	left: calc(100% - 16px);
+	left: calc(100% - 15px);
 }
 /* #endregion */
 
